@@ -342,18 +342,23 @@
     
                 // 使用 GitHub 上的真实图片
                 const imageMap = {
-                    "tianlei": "tianlei.JPG",
-                    "zhengpeng": "zhengpeng.JPG", 
-                    "tianyumi": "tianyumi.JPG",
-                    "mkfzl": "mkfzl.JPG",
-                    "zhentan": "zhentan.JPG",
-                    "family": "family.JPG",
-                    "jvhua": "jvhua.JPG",
-                    "rk": "rk.jpg",
-                    "shi": "shi.jpg"
+                    "tianlei": "images/tianlei.JPG",
+                    "zhengpeng": "images/zhengpeng.JPG", 
+                    "tianyumi": "images/tianyumi.JPG",
+                    "mkfzl": "images/mkfzl.JPG",
+                    "zhentan": "images/zhentan.JPG",
+                    "family": "images/family.JPG",
+                    "jvhua": "images/jvhua.JPG",
+                    "rk": "images/rk.jpg",
+                    "shi": "images/shi.jpg"
                 };
     
-                img.src = `./images/${imageMap[type]}`;
+                // 设置图片路径
+                if (imageMap[type]) {
+                    img.src = imageMap[type];
+                } else {
+                    img.src = `images/${type}.jpg`;
+                }
     
                 imageContainer.appendChild(img);
             }

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6.0大战 - 身份选择游戏</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            margin-top: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ffcc00;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+            color: #cccccc;
+        }
+        
+        .identity-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .identity-option {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .identity-option:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+            border-color: #ffcc00;
+        }
+        
+        .identity-option.selected {
+            background: rgba(255, 204, 0, 0.2);
+            border-color: #ffcc00;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+        }
+        
+        .result-area {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            min-height: 200px;
+            display: none;
+        }
+        
+        .result-text {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .game-image {
+            max-width: 200px;
+            border-radius: 10px;
+            border: 2px solid #ffcc00;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .second-choice {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .second-options {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .btn {
+            background: #ffcc00;
+            color: #333;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .btn:hover {
+            background: #ffdd44;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 204, 0, 0.4);
+        }
+        
+        .btn-reset {
+            background: #ff3333;
+            color: white;
+        }
+        
+        .btn-reset:hover {
+            background: #ff5555;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #cccccc;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 600px) {
+            .identity-options {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>🎮 6.0大战</h1>
+    <div class="subtitle">请选择你的身份，开启冒险之旅！</div>
+    
+    <div class="container">
+        <div class="identity-options">
+            <div class="identity-option" data-identity="田雷">田雷</div>
+            <div class="identity-option" data-identity="郑朋">郑朋</div>
+            <div class="identity-option" data-identity="甜玉米">甜玉米</div>
+            <div class="identity-option" data-identity="萌磕腐蟑螂">萌磕腐蟑螂</div>
+            <div class="identity-option" data-identity="柠檬水">柠檬水</div>
+            <div class="identity-option" data-identity="芋泥">芋泥</div>
+            <div class="identity-option" data-identity="辱磕腐蟑螂">辱磕腐蟑螂</div>
+            <div class="identity-option" data-identity="其他">其他</div>
+        </div>
+        
+        <div class="second-choice">
+            <div class="result-text">❌ 未检测到，请再次选择</div>
+            <div class="subtitle">新选项：洗脚水, 牛蛋子, 屎壳郎</div>
+            <div class="second-options">
+                <div class="identity-option" data-second-choice="洗脚水">洗脚水</div>
+                <div class="identity-option" data-second-choice="牛蛋子">牛蛋子</div>
+                <div class="identity-option" data-second-choice="屎壳郎">屎壳郎</div>
+            </div>
+        </div>
+        
+        <div class="result-area" id="resultArea">
+            <div class="result-text" id="resultText"></div>
+            <div class="image-container" id="imageContainer"></div>
+        </div>
+        
+        <div style="text-align: center;">
+            <button class="btn" id="confirmBtn">确认选择</button>
+            <button class="btn btn-reset" id="resetBtn">重新开始</button>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>6.0大战小游戏 | 仅供娱乐</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const identityOptions = document.querySelectorAll('.identity-option[data-identity]');
+            const secondOptions = document.querySelectorAll('.identity-option[data-second-choice]');
+            const confirmBtn = document.getElementById('confirmBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const resultArea = document.getElementById('resultArea');
+            const resultText = document.getElementById('resultText');
+            const imageContainer = document.getElementById('imageContainer');
+            const secondChoiceSection = document.querySelector('.second-choice');
+            
+            let selectedIdentity = null;
+            let isSecondChoice = false;
+            let selectedSecondChoice = null;
+            
+            // 身份选择事件
+            identityOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // 移除所有选项的选中状态
+                    identityOptions.forEach(opt => opt.classList.remove('selected'));
+                    // 设置当前选项为选中状态
+                    this.classList.add('selected');
+                    selectedIdentity = this.getAttribute('data-identity');
+                    isSecondChoice = false;
+                    secondChoiceSection.style.display = 'none';
+                });
+            });
+            
+            // 第二选择事件
+            secondOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // 移除所有第二选项的选中状态
+                    secondOptions.forEach(opt => opt.classList.remove('selected'));
+                    // 设置当前选项为选中状态
+                    this.classList.add('selected');
+                    selectedSecondChoice = this.getAttribute('data-second-choice');
+                    isSecondChoice = true;
+                });
+            });
+            
+            // 确认选择按钮事件
+            confirmBtn.addEventListener('click', function() {
+                if (!selectedIdentity) {
+                    alert('请先选择一个身份！');
+                    return;
+                }
+                
+                // 显示结果区域
+                resultArea.style.display = 'block';
+                imageContainer.innerHTML = '';
+                
+                // 根据选择显示不同结果
+                if (isSecondChoice) {
+                    handleSecondChoice(selectedSecondChoice);
+                } else {
+                    handleIdentityChoice(selectedIdentity);
+                }
+            });
+            
+            // 重新开始按钮事件
+            resetBtn.addEventListener('click', function() {
+                // 重置所有状态
+                identityOptions.forEach(opt => opt.classList.remove('selected'));
+                secondOptions.forEach(opt => opt.classList.remove('selected'));
+                resultArea.style.display = 'none';
+                secondChoiceSection.style.display = 'none';
+                selectedIdentity = null;
+                selectedSecondChoice = null;
+                isSecondChoice = false;
+            });
+            
+            // 处理身份选择
+            function handleIdentityChoice(identity) {
+                switch(identity) {
+                    case "田雷":
+                        resultText.innerHTML = "💝 您的老婆已送达，您俩歇着吧";
+                        addImage("tianlei", "田雷");
+                        break;
+                    case "郑朋":
+                        resultText.innerHTML = "💙 您的老公已送达，您俩歇着吧";
+                        addImage("zhengpeng", "郑朋");
+                        break;
+                    case "甜玉米":
+                        resultText.innerHTML = "🌽 甜玉米变身！<br>这次与你一起战斗的是ggm！🕵️<br>我们一家四口很幸福☺️";
+                        addImage("tianyumi", "甜玉米");
+                        addImage("zhentan", "侦探");
+                        addImage("family", "一家四口");
+                        break;
+                    case "萌磕腐蟑螂":
+                        resultText.innerHTML = "🪳 小蟑螂出击！我在1108w很想你～✨<br>这次与你一起战斗的是米米们！🕵️<br>我们一家四口很幸福☺️";
+                        addImage("mkfzl", "萌磕腐蟑螂");
+                        addImage("zhentan", "侦探");
+                        addImage("family", "一家四口");
+                        break;
+                    case "柠檬水":
+                    case "芋泥":
+                    case "辱磕腐蟑螂":
+                        resultText.innerHTML = "❌ 未检测到，请再次选择";
+                        secondChoiceSection.style.display = 'block';
+                        resultArea.style.display = 'none';
+                        break;
+                    case "其他":
+                        resultText.innerHTML = "🚫 请速速离场";
+                        break;
+                    default:
+                        resultText.innerHTML = "❌ 无效身份，请重新选择";
+                }
+            }
+            
+            // 处理第二选择
+            function handleSecondChoice(choice) {
+                switch(choice) {
+                    case "洗脚水":
+                    case "牛蛋子":
+                        resultText.innerHTML = "❌ 未检测到，已发卖<br>⚠️ 检测到0.7🌼菊花黑洞🕳️粉<br>让我猜猜你们在干嘛<br>又控制不住自己啦？咋喷💩尼";
+                        addImage("jvhua", "菊花");
+                        addImage("shi", "屎");
+                        break;
+                    case "屎壳郎":
+                        resultText.innerHTML = "💩 滚啊！<br>让我猜猜你们在干嘛<br>又控制不住自己啦？咋喷💩尼";
+                        addImage("rk", "辱磕");
+                        addImage("shi", "屎");
+                        break;
+                    default:
+                        resultText.innerHTML = "❌ 无效选择";
+                }
+            }
+            
+            // 添加图片到结果区域
+            function addImage(type, altText) {
+                const img = document.createElement('img');
+                img.className = 'game-image';
+                img.alt = altText;
+                
+                // 在实际应用中，这里应该是真实的图片URL
+                // 这里使用占位图片
+                img.src = `https://via.placeholder.com/200x200/333333/ffffff?text=${encodeURIComponent(altText)}`;
+                
+                imageContainer.appendChild(img);
+            }
+        });
+    </script>
+</body>
+</html>

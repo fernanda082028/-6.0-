@@ -339,11 +339,22 @@
                 const img = document.createElement('img');
                 img.className = 'game-image';
                 img.alt = altText;
-                
-                // 在实际应用中，这里应该是真实的图片URL
-                // 这里使用占位图片
-                img.src = `https://via.placeholder.com/200x200/333333/ffffff?text=${encodeURIComponent(altText)}`;
-                
+    
+                // 使用 GitHub 上的真实图片
+                const imageMap = {
+                    "tianlei": "tianlei.JPG",
+                    "zhengpeng": "zhengpeng.JPG", 
+                    "tianyumi": "tianyumi.JPG",
+                    "mkfzl": "mkfzl.JPG",
+                    "zhentan": "zhentan.JPG",
+                    "family": "family.JPG",
+                    "jvhua": "jvhua.JPG",
+                    "rk": "rk.jpg",
+                    "shi": "shi.jpg"
+                };
+    
+                img.src = `./images/${imageMap[type]}`;
+    
                 imageContainer.appendChild(img);
             }
         });

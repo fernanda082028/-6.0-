@@ -13,13 +13,27 @@
         }
         
         body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background: url('./images/background.jpg') no-repeat center center fixed;
+            background-size: cover;
             color: white;
             min-height: 100vh;
             padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
+        }
+        
+        /* 添加半透明遮罩，提高文字可读性 */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: -1;
         }
         
         .container {
@@ -30,6 +44,7 @@
             padding: 30px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             margin-top: 20px;
+            z-index: 1;
         }
         
         h1 {
@@ -281,24 +296,36 @@
             function handleIdentityChoice(identity) {
                 switch(identity) {
                     case "田雷":
-                        resultText.innerHTML = "💝 您的老婆已送达，您俩歇着吧";
-                        addImage("tianlei", "田雷");
+                        resultText.innerHTML = "💝 你的老婆来接你喽～<br>来喽来喽！";
+                        addImage("./images/tianlei.jpg", "田雷");
                         break;
                     case "郑朋":
-                        resultText.innerHTML = "💙 您的老公已送达，您俩歇着吧";
-                        addImage("zhengpeng", "郑朋");
+                        resultText.innerHTML = "💙 你的老公来接你喽～<br>来喽来喽！";
+                        addImage("./images/zhengpeng.jpg", "郑朋");
                         break;
                     case "甜玉米":
-                        resultText.innerHTML = "🌽 甜玉米变身！<br>这次与你一起战斗的是ggm！🕵️<br>我们一家四口很幸福☺️";
-                        addImage("tianyumi", "甜玉米");
-                        addImage("zhentan", "侦探");
-                        addImage("family", "一家四口");
+                        resultText.innerHTML = "🌽 甜玉米爆发！粒量超乎想象！";
+                        addImage("./images/tianyumi.jpg", "甜玉米");
+                        setTimeout(() => {
+                            resultText.innerHTML = "这次与你一起战斗的是gg们！🕵️";
+                            addImage("./images/zhentan.jpg", "侦探");
+                        }, 2000);
+                        setTimeout(() => {
+                            resultText.innerHTML = "副本通关！解锁成就：幸福の四口之家 ☺️";
+                            addImage("./images/family.jpg", "一家四口");
+                        }, 4000);
                         break;
                     case "萌磕腐蟑螂":
-                        resultText.innerHTML = "🪳 小蟑螂出击！我在1108w很想你～✨<br>这次与你一起战斗的是米米们！🕵️<br>我们一家四口很幸福☺️";
-                        addImage("mkfzl", "萌磕腐蟑螂");
-                        addImage("zhentan", "侦探");
-                        addImage("family", "一家四口");
+                        resultText.innerHTML = "🪳 小蟑螂出击！为大jv冲锋！";
+                        addImage("./images/mkfzl.jpg", "萌磕腐蟑螂");
+                        setTimeout(() => {
+                            resultText.innerHTML = "这次与你一起战斗的是米米们！🕵️";
+                            addImage("./images/zhentan.jpg", "侦探");
+                        }, 2000);
+                        setTimeout(() => {
+                            resultText.innerHTML = "副本通关！解锁成就：幸福の四口之家 ☺️";
+                            addImage("./images/family.jpg", "一家四口");
+                        }, 4000);
                         break;
                     case "柠檬水":
                     case "芋泥":
@@ -320,14 +347,20 @@
                 switch(choice) {
                     case "洗脚水":
                     case "牛蛋子":
-                        resultText.innerHTML = "❌ 未检测到，已发卖<br>⚠️ 检测到0.7🌼菊花黑洞🕳️粉<br>让我猜猜你们在干嘛<br>又控制不住自己啦？咋喷💩尼";
-                        addImage("jvhua", "菊花");
-                        addImage("shi", "屎");
+                        resultText.innerHTML = "❌ 未检测到，已发卖<br>⚠️ 检测到0.7🌼菊花黑洞🕳️粉";
+                        addImage("./images/jvhua.jpg", "菊花");
+                        setTimeout(() => {
+                            resultText.innerHTML = "让我猜猜你们在干嘛<br>又控制不住自己啦？咋喷💩尼";
+                            addImage("./images/shi.jpg", "屎");
+                        }, 2000);
                         break;
                     case "屎壳郎":
-                        resultText.innerHTML = "💩 滚啊！<br>让我猜猜你们在干嘛<br>又控制不住自己啦？咋喷💩尼";
-                        addImage("rk", "辱磕");
-                        addImage("shi", "屎");
+                        resultText.innerHTML = "💩 滚啊！";
+                        addImage("./images/rk.jpg", "辱磕");
+                        setTimeout(() => {
+                            resultText.innerHTML = "让我猜猜你们在干嘛<br>又控制不住自己啦？咋喷💩尼";
+                            addImage("./images/shi.jpg", "屎");
+                        }, 2000);
                         break;
                     default:
                         resultText.innerHTML = "❌ 无效选择";
@@ -335,31 +368,15 @@
             }
             
             // 添加图片到结果区域
-            function addImage(type, altText) {
+            function addImage(src, altText) {
                 const img = document.createElement('img');
                 img.className = 'game-image';
+                img.src = src;
                 img.alt = altText;
-    
-                // 使用 GitHub 上的真实图片
-                const imageMap = {
-                    "tianlei": "images/tianlei.JPG",
-                    "zhengpeng": "images/zhengpeng.JPG", 
-                    "tianyumi": "images/tianyumi.JPG",
-                    "mkfzl": "images/mkfzl.JPG",
-                    "zhentan": "images/zhentan.JPG",
-                    "family": "images/family.JPG",
-                    "jvhua": "images/jvhua.JPG",
-                    "rk": "images/rk.jpg",
-                    "shi": "images/shi.jpg"
+                img.onerror = function() {
+                    console.log('图片加载失败: ' + src);
+                    this.style.display = 'none';
                 };
-    
-                // 设置图片路径
-                if (imageMap[type]) {
-                    img.src = imageMap[type];
-                } else {
-                    img.src = `images/${type}.jpg`;
-                }
-    
                 imageContainer.appendChild(img);
             }
         });
